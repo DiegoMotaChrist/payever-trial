@@ -86,22 +86,41 @@ Mongo
   <img src="https://i.ibb.co/q79S5YZ/delete-avatar-by-user-mongo.png" width="500" /></a>
 </p>
 
-- Coverage Files
+
+## Done
+
+- Your project passes eslint
 
 <p align="left">
-  <img src="https://i.ibb.co/PYZZH6h/coverage-files.png" width="500" /></a>
+  <img src="https://i.ibb.co/q794wsd/eslint.png" width="500" /></a>
 </p>
 
-- RabbitMQ Messages
+- The project builds and can start: "Running the app" guide
+
+- All endpoints can be requested from postman: Available link to download collection: https://1drv.ms/u/s!AkdSjBhQnhatpxTHYgF13b3FJAyu?e=4U3k1g
+
+- Data is stored in database successfully and rabbit event is emitted:
+
+Mongo: Accompanied by its respective endpoint above
+
+RabbitMQ Messages
 
 <p align="left">
   <img src="https://i.ibb.co/ZX4dGdJ/a.png" width="500" /></a>
 </p>
 
-- Mailtrap Mail
+Mailtrap Mail
 
 <p align="left">
   <img src="https://i.ibb.co/k34g4gy/mailtrap.png" width="500" /></a>
+</p>
+
+- Your application is covered with unit/functional tests
+
+Coverage Files
+
+<p align="left">
+  <img src="https://i.ibb.co/PYZZH6h/coverage-files.png" width="500" /></a>
 </p>
 
 

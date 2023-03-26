@@ -1,6 +1,9 @@
 import { catchError, of, map } from 'rxjs';
 import { HttpService } from '@nestjs/axios/dist';
 import { UserService } from './user.service';
+import { config } from 'dotenv';
+
+config();
 
 describe('User Service', () => {
   let userService: UserService;
@@ -71,7 +74,7 @@ describe('User Service', () => {
       const result = await userService.findOne(id);
       expect(result).toEqual(user);
       expect(httpService.get).toHaveBeenCalledWith(
-        `https://reqres.in/api/users/${id}`,
+        `${process.env.GLOBAL_REQUEST_APP_URL}/users/${id}`,
       );
     });
 
@@ -90,7 +93,7 @@ describe('User Service', () => {
       );
       await expect(userService.findOne(id)).rejects.toThrow(error);
       expect(httpService.get).toHaveBeenCalledWith(
-        `https://reqres.in/api/users/${id}`,
+        `${process.env.GLOBAL_REQUEST_APP_URL}/users/${id}`,
       );
     });
 
@@ -126,13 +129,6 @@ describe('User Service', () => {
     });
 
     it('should return file and base64 data when user avatar exists', async () => {
-      userAvatarModel = {
-        findOne: jest.fn().mockReturnValueOnce({
-          exec: jest.fn().mockResolvedValueOnce(userAvatar),
-        }),
-        save: jest.fn().mockResolvedValueOnce(null),
-      };
-
       userService = new UserService(
         userModel,
         userAvatarModel,
@@ -151,48 +147,49 @@ describe('User Service', () => {
           }),
         ) as any,
       );
-      const result = await userService._getFile(file_url, name, userId);
+      const result = await userService._getFile(
+        file_url,
+        name,
+        userId,
+        userAvatar,
+      );
       expect(result.file).toEqual(userAvatar);
       expect(result.base64).toEqual(base64);
     });
 
-    // it('should only return base64 data when user avatar does not exist', async () => {
-    //   const buffer = Buffer.from('test');
-    //   const base64 = buffer.toString('base64');
+    it('should only return base64 data because user avatar does not exist', async () => {
+      const buffer = Buffer.from('test');
+      const base64 = buffer.toString('base64');
 
-    //   // const userAvatarModel: Model<any> = {
-    //   //   findOne: jest.fn().mockReturnValueOnce({
-    //   //     exec: jest.fn().mockResolvedValueOnce(null),
-    //   //   }),
-    //   //   save: jest.fn().mockResolvedValueOnce(null),
-    //   //   constructor: jest.fn().mockReturnValueOnce(userAvatar),
-    //   // } as any;
+      function userAvatarModel(this: any): any {
+        this.save = jest
+          .fn()
+          .mockResolvedValueOnce(Promise.resolve(userAvatar));
+      }
 
-    //   const userAvatarModel: Model<any> = new Model(userAvatar);
+      userService = new UserService(
+        userModel,
+        userAvatarModel as any,
+        messageService,
+        httpService,
+        mailService,
+      );
 
-    //   userService = new UserService(
-    //     userModel,
-    //     userAvatarModel,
-    //     messageService,
-    //     httpService,
-    //     mailService,
-    //   );
+      jest.spyOn(httpService, 'get').mockReturnValueOnce(
+        of({
+          data: buffer,
+        }).pipe(
+          map((response) => response),
+          catchError((error) => {
+            throw error;
+          }),
+        ) as any,
+      );
 
-    //   jest.spyOn(httpService, 'get').mockReturnValueOnce(
-    //     of({
-    //       data: buffer,
-    //     }).pipe(
-    //       map((response) => response),
-    //       catchError((error) => {
-    //         throw error;
-    //       }),
-    //     ) as any,
-    //   );
-
-    //   const result = await userService._getFile(file_url, name, userId);
-    //   expect(result.file).toEqual(null);
-    //   expect(result.base64).toEqual(base64);
-    // });
+      const result = await userService._getFile(file_url, name, userId, null);
+      expect(result.file).toEqual(null);
+      expect(result.base64).toEqual(base64);
+    });
 
     it('should throw an error if httpService throws an error', async () => {
       const error = new Error('Internal Server Error');
@@ -216,7 +213,7 @@ describe('User Service', () => {
       );
 
       await expect(
-        userService._getFile(file_url, name, userId),
+        userService._getFile(file_url, name, userId, userAvatar),
       ).rejects.toThrow(error);
     });
   });
@@ -274,9 +271,15 @@ describe('User Service', () => {
         ) as any,
       );
 
+      userAvatarModel = {
+        findOne: jest.fn().mockReturnValue({
+          exec: jest.fn().mockResolvedValueOnce(null),
+        }),
+      };
+
       userService = new UserService(
         userModel,
-        userAvatarModel,
+        userAvatarModel as any,
         messageService,
         httpService,
         mailService,
@@ -295,7 +298,7 @@ describe('User Service', () => {
       expect('file' in result).toBeFalsy();
     });
 
-    it('should return file and base64 if file saved', async () => {
+    it('should return file and base64 because file is saved', async () => {
       const id = '1';
       const buffer = Buffer.from('test');
       const base64 = buffer.toString('base64');
@@ -312,6 +315,12 @@ describe('User Service', () => {
           }),
         ) as any,
       );
+
+      userAvatarModel = {
+        findOne: jest.fn().mockReturnValue({
+          exec: jest.fn().mockResolvedValueOnce(null),
+        }),
+      };
 
       userService = new UserService(
         userModel,
@@ -398,6 +407,9 @@ describe('User Service', () => {
 
   describe('create', () => {
     const newUser = { job: 'developer', name: 'diego' };
+    const savedUser = createdUser;
+    const subject = 'new User from payever-trial service';
+    const text = 'Hi! A new user was created!';
 
     beforeEach(() => {
       jest.clearAllMocks();
@@ -406,42 +418,130 @@ describe('User Service', () => {
       } as unknown as HttpService;
     });
 
-    // it('should return a created user', async () => {
-    //   jest.spyOn(httpService, 'post').mockReturnValueOnce(
-    //     of({
-    //       data: { createdUser },
-    //     }).pipe(
-    //       map((response) => response),
-    //       catchError((error) => {
-    //         throw error;
-    //       }),
-    //     ) as any,
-    //   );
+    it('should return a created user', async () => {
+      jest.spyOn(httpService, 'post').mockReturnValueOnce(
+        of({
+          data: { createdUser },
+        }).pipe(
+          map((response) => response),
+          catchError((error) => {
+            throw error;
+          }),
+        ) as any,
+      );
 
-    //   userModel = new Model();
+      function userModel(this: any): any {
+        this.save = jest.fn().mockResolvedValueOnce(Promise.resolve(savedUser));
+      }
 
-    //   userService = new UserService(
-    //     userModel,
-    //     userAvatarModel,
-    //     messageService,
-    //     httpService,
-    //     mailService,
-    //   );
+      mailService = {
+        sendEmail: jest.fn().mockReturnValueOnce(Promise.resolve(null)),
+      };
 
-    //   const result = await userService.create(newUser);
-    //   expect(result).toEqual(createdUser);
-    //   expect(httpService.post).toHaveBeenCalledWith(
-    //     `https://reqres.in/api/users/`,
-    //     newUser,
-    //   );
-    // });
+      messageService = {
+        sendMessage: jest.fn().mockReturnValueOnce(Promise.resolve(null)),
+      };
 
-    it('should throw an error in sendMessage', async () => {
-      return;
+      userService = new UserService(
+        userModel as any,
+        userAvatarModel,
+        messageService,
+        httpService,
+        mailService,
+      );
+
+      const result = await userService.create(newUser);
+      expect(result).toEqual(savedUser);
+      expect(httpService.post).toHaveBeenCalledWith(
+        `${process.env.GLOBAL_REQUEST_APP_URL}/users`,
+        newUser,
+      );
+      expect(mailService.sendEmail).toHaveBeenCalledWith(subject, text);
+      expect(messageService.sendMessage).toHaveBeenCalledWith(
+        JSON.stringify(savedUser),
+      );
     });
 
     it('should throw an error in sendMail', async () => {
-      return;
+      jest.spyOn(httpService, 'post').mockReturnValueOnce(
+        of({
+          data: { createdUser },
+        }).pipe(
+          map((response) => response),
+          catchError((error) => {
+            throw error;
+          }),
+        ) as any,
+      );
+
+      function userModel(this: any): any {
+        this.save = jest.fn().mockResolvedValueOnce(Promise.resolve(savedUser));
+      }
+
+      mailService = {
+        sendEmail: jest
+          .fn()
+          .mockResolvedValueOnce(
+            Promise.reject(new Error('Internal Server Error')),
+          ),
+      };
+
+      messageService = {
+        sendMessage: jest.fn().mockReturnValueOnce(Promise.resolve(null)),
+      };
+
+      userService = new UserService(
+        userModel as any,
+        userAvatarModel,
+        messageService,
+        httpService,
+        mailService,
+      );
+
+      await expect(mailService.sendEmail(subject, text)).rejects.toThrowError(
+        'Internal Server Error',
+      );
+    });
+
+    it('should throw an error in sendMessage', async () => {
+      jest.spyOn(httpService, 'post').mockReturnValueOnce(
+        of({
+          data: { createdUser },
+        }).pipe(
+          map((response) => response),
+          catchError((error) => {
+            throw error;
+          }),
+        ) as any,
+      );
+
+      function userModel(this: any): any {
+        this.save = jest.fn().mockResolvedValueOnce(Promise.resolve(savedUser));
+      }
+
+      messageService = {
+        sendMessage: jest
+          .fn()
+          .mockResolvedValueOnce(
+            Promise.reject(new Error('Internal Server Error')),
+          ),
+      };
+
+      mailService = {
+        sendEmail: jest.fn().mockReturnValueOnce(Promise.resolve(null)),
+      };
+
+      userService = new UserService(
+        userModel as any,
+        userAvatarModel,
+        messageService,
+        httpService,
+        mailService,
+      );
+
+      await expect(
+        messageService.sendMessage(JSON.stringify(newUser)),
+      ).rejects.toThrowError('Internal Server Error');
     });
 
     it('should throw an error if httpService throws an error', async () => {

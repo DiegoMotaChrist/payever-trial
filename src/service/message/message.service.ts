@@ -24,6 +24,8 @@ export class MessageService {
     await this.client.connect();
 
     try {
+      console.log('Sending Message...');
+
       await Promise.resolve(
         firstValueFrom(this.client.send('user', message).pipe(timeout(3000))),
       );

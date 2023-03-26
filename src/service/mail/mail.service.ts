@@ -7,6 +7,8 @@ export class MailService {
 
   async sendEmail(subject: string, text: string) {
     try {
+      console.log('Sending Email...');
+
       await this.mailerService.sendMail({
         to: 'diego.christ@outlook.com',
         subject,

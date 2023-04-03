@@ -14,6 +14,13 @@ Make sure you have a local instance of the following services below and their re
 
 - RabbitMQ
 
+## Technologies
+
+- Node.js
+- Nest.js
+- MongoDB
+- RabbitMQ
+
 ## Running the app
 
 ```bash
@@ -64,14 +71,14 @@ Second Execution
   <img src="https://i.ibb.co/ccDPCFr/find-avatar-by-user-second-execution.png" width="500" /></a>
 </p>
 
-open saved Base64
-<p align="left">
-  <img src="https://i.ibb.co/d0fcd55/teste-open-base64-image.png" width="500" /></a>
-</p>
-
 Mongo
 <p align="left">
   <img src="https://i.ibb.co/Ybb7NR0/find-avatar-by-user-mongo.png" width="500" /></a>
+</p>
+
+open converted Base64
+<p align="left">
+  <img src="https://i.ibb.co/d0fcd55/teste-open-base64-image.png" width="500" /></a>
 </p>
 
 
@@ -120,16 +127,8 @@ Mailtrap Mail
 Coverage Files
 
 <p align="left">
-  <img src="https://i.ibb.co/PYZZH6h/coverage-files.png" width="500" /></a>
+  <img src="https://i.ibb.co/z66Wcv1/coverage-files.png" width="500" /></a>
 </p>
-
-
-## Technologies
-
-- Node.js
-- Nest.js
-- MongoDB
-- RabbitMQ
 
 ## Support
 

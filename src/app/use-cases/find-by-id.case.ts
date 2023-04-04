@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/service/user/user.service';
+import { UserService } from '../../service/user/user.service';
 import { UserEntity } from '../entities/user.entity';
 
 interface FindByIdCaseRequest {

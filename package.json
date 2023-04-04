@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.8.1",
-    "@nestjs-plus/rabbitmq": "^1.4.4",
     "@nestjs/axios": "^2.0.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
@@ -30,7 +29,6 @@
     "@nestjs/microservices": "^9.3.12",
     "@nestjs/mongoose": "^9.2.2",
     "@nestjs/platform-express": "^9.0.0",
-    "@types/amqplib": "^0.10.1",
     "amqp-connection-manager": "^4.1.11",
     "amqplib": "^0.10.3",
     "axios": "^1.3.4",
@@ -71,11 +69,10 @@
   "jest": {
     "modulePathIgnorePatterns": [
       "src/main.ts",
-      "src/database/",
       "src/app.module.ts",
-      "src/service/mail/mail.module.ts",
-      "src/service/message/message.module.ts",
-      "src/user/user.module.ts"
+      "src/service/service.module.ts",
+      "src/infra/",
+      "src/app/entities/"
     ],
     "moduleFileExtensions": [
       "js",

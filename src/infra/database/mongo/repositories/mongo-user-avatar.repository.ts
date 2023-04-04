@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UserAvatarEntity } from 'src/app/entities/user-avatar.entity';
+import { UserAvatarEntity } from '../../../../app/entities/user-avatar.entity';
 import { MongoUserAvatarMapper } from '../mappers/mongo-user-avatar.mapper';
-import { UserAvatarRepository } from 'src/app/repositories/user-avatar.repository';
+import { UserAvatarRepository } from '../../../../app/repositories/user-avatar.repository';
 
 @Injectable()
 export class MongoUserAvatarRepository implements UserAvatarRepository {

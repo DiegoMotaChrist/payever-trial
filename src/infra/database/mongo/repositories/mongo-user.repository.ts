@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UserEntity } from 'src/app/entities/user.entity';
-import { UserRepository } from 'src/app/repositories/user.repository';
+import { UserEntity } from '../../../../app/entities/user.entity';
+import { UserRepository } from '../../../../app/repositories/user.repository';
 import { MongoUserMapper } from '../mappers/mongo-user.mapper';
 
 @Injectable()

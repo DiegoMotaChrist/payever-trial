@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { FileService } from 'src/service/user/file.service';
+import { FileService } from '../../service/user/file.service';
 
 interface GetFileCaseRequest {
   fileUrl: string;
@@ -19,6 +19,7 @@ export class GetFileCase {
     const { data } = await this.fileService.getFile(fileUrl);
 
     const buffer = Buffer.from(data);
+
     const base64 = buffer.toString('base64');
 
     return { buffer, base64 };

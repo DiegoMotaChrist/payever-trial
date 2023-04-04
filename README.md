@@ -4,7 +4,7 @@
 
 ## Description
 
-Projeto para avaliação.
+Project to evaluation.
 
 ## Installation
 
@@ -47,7 +47,12 @@ $ npm run test:cov
 
 - POST /api/users
 <p align="left">
-  <img src="https://i.ibb.co/xJMG5JX/create-user.png" width="500" /></a>
+  <img src="https://i.ibb.co/Yff1kPf/create-user.png" width="500" /></a>
+</p>
+
+DTO errors
+<p align="left">
+  <img src="https://i.ibb.co/qDrgFpq/create-user-dto.png" width="500" /></a>
 </p>
 
 <p align="left">
@@ -56,19 +61,29 @@ $ npm run test:cov
 
 - GET /api/user/{userId}
 <p align="left">
-  <img src="https://i.ibb.co/J36849X/find-user.png" width="500" /></a>
+  <img src="https://i.ibb.co/prH6M7j/find-user.png" width="500" /></a>
+</p>
+
+User Not Found
+<p align="left">
+  <img src="https://i.ibb.co/871MqR0/find-user-not-found.png" width="500" /></a>
 </p>
 
 - GET /api/user/{userId}/avatar
 
 First Execution
 <p align="left">
-  <img src="https://i.ibb.co/74rW8Hp/find-avatar-by-user-first-execution.png" width="500" /></a>
+  <img src="https://i.ibb.co/ncHj0KV/find-avatar-by-user-first-execution.png" width="500" /></a>
 </p>
 
 Second Execution
 <p align="left">
-  <img src="https://i.ibb.co/ccDPCFr/find-avatar-by-user-second-execution.png" width="500" /></a>
+  <img src="https://i.ibb.co/19n8jPK/find-avatar-by-user-second-execution.png" width="500" /></a>
+</p>
+
+User not found
+<p align="left">
+  <img src="https://i.ibb.co/gJYg45R/find-avatar-by-user-first-execution-not-found.png" width="500" /></a>
 </p>
 
 Mongo
@@ -85,7 +100,7 @@ open converted Base64
 - DELETE /api/user/{userId}/avatar
 
 <p align="left">
-  <img src="https://i.ibb.co/dm5D8gZ/delete-avatar-by-user.png" width="500" /></a>
+  <img src="https://i.ibb.co/5LjFdjb/delete-avatar-by-user.png" width="500" /></a>
 </p>
 
 
@@ -96,10 +111,14 @@ open converted Base64
 
 ## Done
 
-- Your project passes eslint
+- Your project passes eslint / prettier format
 
 <p align="left">
   <img src="https://i.ibb.co/q794wsd/eslint.png" width="500" /></a>
+</p>
+
+<p align="left">
+  <img src="https://i.ibb.co/cFBmbP5/prettier-format.png" width="500" /></a>
 </p>
 
 - The project builds and can start: "Running the app" guide
@@ -113,21 +132,21 @@ Mongo: Accompanied by its respective endpoint above
 RabbitMQ Messages
 
 <p align="left">
-  <img src="https://i.ibb.co/ZX4dGdJ/a.png" width="500" /></a>
+  <img src="https://i.ibb.co/XZbWYqD/rabbitmq-receive-message.png" width="500" /></a>
 </p>
 
 Mailtrap Mail
 
 <p align="left">
-  <img src="https://i.ibb.co/k34g4gy/mailtrap.png" width="500" /></a>
+  <img src="https://i.ibb.co/vZvSvyV/mailtrap.png" width="500" /></a>
 </p>
 
 - Your application is covered with unit/functional tests
 
-Coverage Files
+Coverage Files (Coverage of entity files changed, because some of their attributes were strategically used as needed when being instantiated)
 
 <p align="left">
-  <img src="https://i.ibb.co/z66Wcv1/coverage-files.png" width="500" /></a>
+  <img src="https://i.ibb.co/rHd3rwf/coverage-files.png" width="500" /></a>
 </p>
 
 ## Support

@@ -3,7 +3,7 @@ import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { catchError, firstValueFrom } from 'rxjs';
 import { config } from 'dotenv';
 import { AxiosError } from 'axios';
-import { ErrorResponse } from 'src/helpers/Error';
+import { ErrorResponse } from '../../helpers/Error';
 
 config();
 
@@ -91,23 +91,25 @@ export class UserService {
     return data;
   }
 
-  deleteApiUser(userId: string) {
-    this.httpService
-      .delete(`${process.env.GLOBAL_REQUEST_APP_URL}/users/${userId}`)
-      .pipe(
-        catchError((error: AxiosError) => {
-          this.logger.error(error);
-          const errorReponse: ErrorResponse = {
-            name: error.name,
-            code: error.code,
-            message: error.message,
-            statusText: error.response?.statusText,
-          };
-          throw new HttpException(
-            errorReponse,
-            error.response?.status ?? HttpStatus.BAD_REQUEST,
-          );
-        }),
-      );
+  async deleteApiUser(userId: string) {
+    await firstValueFrom(
+      this.httpService
+        .delete(`${process.env.GLOBAL_REQUEST_APP_URL}/users/${userId}`)
+        .pipe(
+          catchError((error: AxiosError) => {
+            this.logger.error(error);
+            const errorReponse: ErrorResponse = {
+              name: error.name,
+              code: error.code,
+              message: error.message,
+              statusText: error.response?.statusText,
+            };
+            throw new HttpException(
+              errorReponse,
+              error.response?.status ?? HttpStatus.BAD_REQUEST,
+            );
+          }),
+        ),
+    );
   }
 }

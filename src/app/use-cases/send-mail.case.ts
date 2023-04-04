@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MailService } from 'src/service/mail/mail.service';
+import { MailService } from '../../service/mail/mail.service';
 
 interface SendMailCaseRequest {
   subject: string;

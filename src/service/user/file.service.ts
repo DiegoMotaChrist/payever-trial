@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios/dist';
 import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { catchError, firstValueFrom } from 'rxjs';
 import { AxiosError } from 'axios';
-import { ErrorResponse } from 'src/helpers/Error';
+import { ErrorResponse } from '../../helpers/Error';
 
 interface GetFileResponse {
   data: ArrayBuffer;

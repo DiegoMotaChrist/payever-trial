@@ -1,4 +1,4 @@
-import { UserAvatarEntity } from 'src/app/entities/user-avatar.entity';
+import { UserAvatarEntity } from '../../../../app/entities/user-avatar.entity';
 
 export class MongoUserAvatarMapper {
   static toMongo(userAvatar: UserAvatarEntity) {

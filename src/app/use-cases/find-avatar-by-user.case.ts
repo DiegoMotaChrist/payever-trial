@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/service/user/user.service';
+import { UserService } from '../../service/user/user.service';
 import { UserAvatarRepository } from '../repositories/user-avatar.repository';
 import { UserAvatarEntity } from '../entities/user-avatar.entity';
 import { GetFileCase } from './get-file.case';

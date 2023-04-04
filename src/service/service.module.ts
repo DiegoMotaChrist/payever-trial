@@ -1,6 +1,7 @@
 import { MailerModule } from '@nestjs-modules/mailer';
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ClientsModule } from '@nestjs/microservices';
+import { LOCALHOST } from '../helpers/RabbitMQ';
 
 @Module({
   imports: [
@@ -14,19 +15,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         },
       },
     }),
-    ClientsModule.register([
-      {
-        name: 'bkplkutk',
-        transport: Transport.RMQ,
-        options: {
-          urls: [String(process.env.RABBIT_URL)],
-          queue: 'user',
-          queueOptions: {
-            durable: false,
-          },
-        },
-      },
-    ]),
+    ClientsModule.register([LOCALHOST]),
   ],
 })
 export class ServiceModule {}

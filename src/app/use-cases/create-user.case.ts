@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/service/user/user.service';
+import { UserService } from '../../service/user/user.service';
 import { UserEntity } from '../entities/user.entity';
 import { UserRepository } from '../repositories/user.repository';
 import { SendMailCase } from './send-mail.case';
 import { SendMessageCase } from './send-message.case';
-import { UserViewModel } from 'src/infra/http/view-models/user.view-model';
 
 interface CreateUserCaseRequest {
   job: string;
@@ -41,7 +40,7 @@ export class CreateUserCase {
     });
 
     await this.sendMessageCase.execute({
-      message: JSON.stringify(UserViewModel.toHTTP(user)),
+      message: JSON.stringify({ id, job, name, createdAt }),
     });
 
     return { user };

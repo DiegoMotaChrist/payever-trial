@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
-import { ErrorResponse } from 'src/helpers/Error';
 
 @Injectable()
 export class MailService {
@@ -18,16 +17,7 @@ export class MailService {
       })
       .catch((error) => {
         this.logger.error(error);
-        const errorReponse: ErrorResponse = {
-          name: error.name,
-          code: error.code,
-          message: error.message,
-          statusText: error.response?.statusText,
-        };
-        throw new HttpException(
-          errorReponse,
-          error.response?.status ?? HttpStatus.BAD_REQUEST,
-        );
+        throw new HttpException(error, HttpStatus.BAD_REQUEST);
       });
   }
 }

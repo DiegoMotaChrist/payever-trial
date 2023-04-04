@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { RabbitMQService } from 'src/service/messaging/rabbitmq.service';
+import { RabbitMQService } from '../../service/messaging/rabbitmq.service';
 
 interface SendMessageCaseRequest {
   message: string;

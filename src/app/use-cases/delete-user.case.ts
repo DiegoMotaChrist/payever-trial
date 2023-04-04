@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/service/user/user.service';
+import { UserService } from '../../service/user/user.service';
 import { UserAvatarRepository } from '../repositories/user-avatar.repository';
 
 interface DeleteUserCaseRequest {
@@ -15,7 +15,9 @@ export class DeleteUserCase {
 
   async execute(request: DeleteUserCaseRequest): Promise<void> {
     const { userId } = request;
-    this.userService.deleteApiUser(userId);
+
+    await this.userService.deleteApiUser(userId);
+
     await this.userAvatarRepository.delete(Number(userId));
   }
 }

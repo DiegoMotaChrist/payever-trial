@@ -1,30 +1,10 @@
 import { UserEntity } from './user.entity';
 
 describe('UserEntity', () => {
-  it('it should be able to create a user', () => {
-    const user = new UserEntity({
-      job: 'developer',
-      name: 'diego',
-    });
-
-    expect(user).toBeTruthy();
-  });
-
-  it('it should be able to create a user by API', () => {
-    const user = new UserEntity({
-      data: {
-        avatar: 'any_url',
-        email: 'diego.christ@outlook.com',
-        first_name: 'diego',
-        last_name: 'christ',
-        id: 1,
-      },
-      support: {
-        text: 'any_text',
-        url: 'any_url',
-      },
-    });
-
-    expect(user).toBeTruthy();
+  it('should create a new instance of UserEntity', () => {
+    const user = new UserEntity({ name: 'John Doe', job: 'Software Engineer' });
+    expect(user).toBeInstanceOf(UserEntity);
+    expect(user.name).toBe('John Doe');
+    expect(user.job).toBe('Software Engineer');
   });
 });

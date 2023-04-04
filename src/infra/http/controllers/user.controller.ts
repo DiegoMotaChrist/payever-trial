@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Delete, Param, Body } from '@nestjs/common';
-import { CreateUserCase } from 'src/app/use-cases/create-user.case';
-import { CreateUserDTO } from 'src/infra/http/dtos/create-user.dto';
-import { UserViewModel } from 'src/infra/http/view-models/user.view-model';
-import { FindByIdCase } from 'src/app/use-cases/find-by-id.case';
-import { DeleteUserCase } from 'src/app/use-cases/delete-user.case';
-import { FindAvatarByUserCase } from 'src/app/use-cases/find-avatar-by-user.case';
+import { CreateUserCase } from '../../../app/use-cases/create-user.case';
+import { CreateUserDTO } from '../../../infra/http/dtos/create-user.dto';
+import { UserViewModel } from '../../../infra/http/view-models/user.view-model';
+import { FindByIdCase } from '../../../app/use-cases/find-by-id.case';
+import { DeleteUserCase } from '../../../app/use-cases/delete-user.case';
+import { FindAvatarByUserCase } from '../../../app/use-cases/find-avatar-by-user.case';
 import { UserAvatarModel } from '../view-models/user-avatar.view-model';
 
 @Controller('user')
